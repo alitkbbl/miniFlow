@@ -1,4 +1,3 @@
-# miniflow/losses/softmax_ce.py
 import numpy as np
 from loss import Loss
 
