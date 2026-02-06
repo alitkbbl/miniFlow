@@ -2,7 +2,6 @@
 import numpy as np
 from loss import Loss
 
-
 class SoftmaxCrossEntropy(Loss):
     def __init__(self):
         self.softmax_output = None
