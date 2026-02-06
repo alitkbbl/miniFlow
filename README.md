@@ -1,7 +1,7 @@
 # Library from Scratch with NumPy
 
 ## A lightweight, educational deep learning library implemented purely in NumPy.
-## 🎯 Core Features
+## 🎯 Core Features:
 
   Pure NumPy Implementation: No heavy framework dependencies
 
