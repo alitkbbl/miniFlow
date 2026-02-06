@@ -1,6 +1,5 @@
 from miniflow.layers.layer import Layer
 
-
 class Activation(Layer):
     def __init__(self, activation_func, activation_prime):
         super().__init__()

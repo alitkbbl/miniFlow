@@ -1,7 +1,6 @@
 import numpy as np
 from activation import Activation
 
-
 class LeakyReLU(Activation):
     def __init__(self, alpha=0.01):
         self.alpha = alpha

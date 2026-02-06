@@ -1,7 +1,6 @@
 import numpy as np
 from activation import Activation
 
-
 class ReLU(Activation):
     def __init__(self):
         def relu(x):

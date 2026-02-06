@@ -1,7 +1,5 @@
-# miniflow/activations/tanh.py
 import numpy as np
 from activation import Activation
-
 
 class Tanh(Activation):
     def __init__(self):
