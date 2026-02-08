@@ -1,46 +1,114 @@
-# 🧠 miniFlow: A Deep Learning Framework Built from Scratch with NumPy
+# miniFlow
 
-[![Built with Python](https://img.shields.io/badge/Python-3.8+%20|%20NumPy-blue?style=flat-square&logo=python)](https://www.python.org/)
-[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
-[![Supported Parameter Count](https://img.shields.io/badge/Parameters-~100K-orange?style=flat-square)](https://github.com/alitkbbl/miniFlow)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)](https://www.python.org/)
+[![NumPy](https://img.shields.io/badge/Backend-Pure%20NumPy-013243?style=flat-square&logo=numpy)](https://numpy.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Accuracy](https://img.shields.io/badge/MNIST%20Accuracy-~94%25-success?style=flat-square)](results.png)
+[![Parameters](https://img.shields.io/badge/Parameters-~109k-orange?style=flat-square)](model.py)
 
-## About miniFlow ✨
+**miniFlow** is a modular, high-performance deep learning library built entirely **from scratch** using **NumPy**.
 
-**miniFlow** is a lightweight, object-oriented, and educational deep learning framework implemented solely using the **NumPy** library, inspired by the **TensorFlow/Keras** syntax. The primary goal of this project is to gain a deeper understanding of the fundamental concepts of neural networks, including gradient computation (Backpropagation), standard layers, and optimization methods, by building them *from scratch*.
+Designed with an API inspired by Keras and TensorFlow, this project aims to demystify the "black box" of deep learning. It demonstrates how neural networks operate at the lowest level—handling matrix calculus, gradient descent, and backpropagation manually without relying on auto-differentiation engines.
 
-miniFlow serves as an excellent tool for developers and students who wish to explore the inner workings of larger deep learning frameworks.
+---
 
-## Key Features 🔑
+## 🚀 Key Features
 
-Focusing on code clarity and efficiency (while maintaining implementation simplicity), miniFlow offers a comprehensive set of tools:
+*   **Pure NumPy Core:** No pre-built Autograd. Every forward and backward pass is mathematically implemented using matrix operations.
+*   **Keras-Style API:** Intuitive model construction using `model.add()`, `compile()`, and `fit()`.
+*   **Advanced Optimizers:** Full implementation of **Adam** (Adaptive Moment Estimation) with bias correction, alongside standard SGD.
+*   **Smart Initialization:** Automatic weight initialization support for **He** (for ReLU) and **Xavier/Glorot** (for Sigmoid/Tanh).
+*   **Modular Architecture:** Clean separation of Layers, Losses, Activations, and Optimizers for easy extensibility.
 
-*   **Object-Oriented and Modular Architecture:** Structured with separate modules for layers, activation functions, and loss functions for easier maintenance and extension.
-*   **Support for Advanced Layers:** Implementation of essential layers for modern neural networks:
-    *   **Flatten Layer**
-    *   **BatchNormalization Layer**
-    *   **Dropout Layer**
-*   **Powerful Callbacks System:** Includes an **Early Stopping** system (with `val_loss` monitoring capability) to prevent overfitting during training.
-*   **Basic and Advanced Optimizers:** Support for key optimization methods:
-    *   **SGD** (Stochastic Gradient Descent)
-    *   **Adam**
-*   **Essential Loss Functions:** Includes **SoftmaxCrossEntropy** (suitable for multi-class classification) and **MSE** (Mean Squared Error).
-*   **Efficient Training:** Complete implementation of the four main stages of each epoch (Forward Pass, Loss Calculation, Backward Pass, Weight Update) with support for **Mini-Batching** for acceptable performance.
+---
 
-## Installation and Setup 🛠️
+## 📂 Project Structure
+```text
+miniflow/
+├── activations/          # ReLU, LeakyReLU, Sigmoid, Tanh, Softmax
+├── layers/               # Dense, Flatten, Dropout, BatchNorm
+├── losses/               # SoftmaxCrossEntropy, MSE, BinaryCrossEntropy
+├── optimizers/           # Adam, SGD
+├── utils/                # Batch generation and data utilities
+├── model.py              # Core Engine (Graph execution & Training loop)
+└── main.py               # Example usage (MNIST Training)
+```
+---
 
-Since miniFlow is an educational project and its only dependency is NumPy, installation is straightforward:
+## ⚡ Quick Start
 
-### Prerequisites
-
-*   Python 3.8+
-*   NumPy
-*   Matplotlib
-
-## Documentation & Development 📚
-
-For a deeper guide on the implementation of the Forward/Backward Pass in each layer and the mathematical details behind the optimizers, please refer to the files within the respective folders.
-
-
+Building a neural network is simple and familiar. Below is an example of creating a Multi-Layer Perceptron (MLP) for image classification.
+```python
+import numpy as np
+from miniflow.model import Model
+from miniflow.layers import Dense, Flatten
+from miniflow.activations import ReLU
+from miniflow.losses import SoftmaxCrossEntropy
+from miniflow.optimizers import Adam
 
 
+# 1. Initialize Model and test data
+model = Model()
+x_train = np.random.randn(1000, 28, 28) 
+y_train = np.random.randint(0, 10, size=(1000,))
+y_train_encoded = np.eye(10)[y_train] 
 
+# 2. Build Architecture (Input -> Hidden -> Output)
+model.add(Flatten(input_shape=(28, 28)))      # Flatten 28x28 images
+model.add(Dense(128, kernel_initializer='he')) # Hidden Layer 1
+model.add(ReLU())
+model.add(Dense(64, kernel_initializer='he'))  # Hidden Layer 2
+model.add(ReLU())
+model.add(Dense(10))                           # Output Layer (10 classes)
+
+# 3. Compile
+model.compile(optimizer=Adam(learning_rate=0.001), 
+              loss=SoftmaxCrossEntropy())
+
+# 4. Train
+history = model.fit(x_train, y_train_encoded, epochs=5, batch_size=64)
+```
+
+---
+
+## 📊 Performance & Results
+
+We evaluated **miniFlow** on the standard **MNIST dataset** (60,000 training images, 10,000 test images). The results demonstrate high numerical stability and rapid convergence, comparable to industrial frameworks for this task.
+
+*   **High Accuracy:** Using a simple MLP architecture (Flatten -> Dense -> ReLU), the model achieved a **94.92% accuracy** on the unseen test set in just **5 epochs**.
+*   **Rapid Convergence:** Thanks to the precise implementation of the **Adam** optimizer, the training loss dropped significantly from `1.07` (Epoch 1) to `0.25` (Epoch 5).
+*   **Efficiency:** The model, containing **109,386 parameters**, trains efficiently using vectorized NumPy operations.
+
+### Visualization
+The visualization below displays the training loss curve and sample predictions from the test set. Green labels indicate correct predictions, while red indicates a mismatch.
+
+![Training Results](results.png)
+
+---
+
+## 🛠️ Supported Modules
+
+### Layers (`miniflow.layers`)
+*   **Dense:** Fully connected layer with automatic weight initialization.
+*   **Flatten:** Reshapes input tensors for dense processing.
+*   **Dropout:** Randomly zeroes elements to prevent overfitting.
+*   **BatchNorm:** Normalizes layer inputs for faster training.
+
+### Activations (`miniflow.activations`)
+*   **ReLU & LeakyReLU:** Standard for hidden layers.
+*   **Tanh & Sigmoid:** For specific non-linear requirements.
+*   **Softmax:** Integrated for multi-class probability distribution.
+
+### Optimizers (`miniflow.optimizers`)
+*   **Adam:** Implements momentum ($m_t$) and RMSProp ($v_t$) with bias correction.
+*   **SGD:** Stochastic Gradient Descent.
+
+### Losses (`miniflow.losses`)
+*   **SoftmaxCrossEntropy:** Includes numerical stability clipping (`1e-15`) to prevent `log(0)` errors.
+*   **BinaryCrossEntropy:** For binary classification tasks.
+*   **MSE:** Mean Squared Error for regression.
+
+---
+
+### 📝 License
+This project is open-source and intended for educational purposes to demonstrate the internal mechanics of Deep Learning frameworks.
