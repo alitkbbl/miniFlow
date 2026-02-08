@@ -4,7 +4,7 @@
 [![NumPy](https://img.shields.io/badge/Backend-Pure%20NumPy-013243?style=flat-square&logo=numpy)](https://numpy.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Accuracy](https://img.shields.io/badge/MNIST%20Accuracy-~94%25-success?style=flat-square)](results.png)
-[![Parameters](https://img.shields.io/badge/Parameters-~109k-orange?style=flat-square)](model.py)
+[![Parameters](https://img.shields.io/badge/Parameters-~109k-orange?style=flat-square)](miniflow/model/model.py)
 
 **miniFlow** is a modular, high-performance deep learning library built entirely **from scratch** using **NumPy**.
 
@@ -30,7 +30,8 @@ miniflow/
 ├── losses/               # SoftmaxCrossEntropy, MSE, BinaryCrossEntropy
 ├── optimizers/           # Adam, SGD
 ├── utils/                # Batch generation and data utilities
-├── model.py              # Core Engine (Graph execution & Training loop)
+├── model/                # Core Engine (Graph execution & Training loop)
+├── mnist.npz             # MNIST dataset (training/testing images and labels)
 └── main.py               # Example usage (MNIST Training)
 ```
 ---

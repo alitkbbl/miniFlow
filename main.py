@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 import os
 
 # --- MiniFlow Framework Imports ---
@@ -47,7 +48,7 @@ def to_categorical(y, num_classes=10):
 def plot_training_results(loss_values, x_test, y_test, preds, save_path='results.png'):
     """
     Plots the loss trend and displays predicted samples.
-    (Revised version to avoid tight_layout error)
+    (Revised to ensure Epoch axis only shows integers)
     """
     if not loss_values:
         print("⚠️ Loss list is empty, no plot will be drawn.")
@@ -66,9 +67,16 @@ def plot_training_results(loss_values, x_test, y_test, preds, save_path='results
     ax1.grid(True, linestyle='--', alpha=0.6)
     ax1.legend()
 
+    # ---------------------------------------------------------
+    # FIX: Force x-axis to use integer ticks only
+    # ---------------------------------------------------------
+    ax1.xaxis.set_major_locator(MaxNLocator(integer=True))
+
     # --- Section 2: Display Sample Images (Right) ---
     # Selecting 9 random images from the test data
-    indices = np.random.choice(len(x_test), 9, replace=False)
+    # Ensure we don't try to sample more than available
+    num_samples = min(9, len(x_test))
+    indices = np.random.choice(len(x_test), num_samples, replace=False)
 
     for i, idx in enumerate(indices):
         # Calculate position in the grid (3x3 block on the right)
@@ -79,7 +87,8 @@ def plot_training_results(loss_values, x_test, y_test, preds, save_path='results
 
         # Handling image dimensions (if flattened, reshape back to 28x28)
         img = x_test[idx]
-        if img.ndim == 1: img = img.reshape(28, 28)
+        if img.ndim == 1:
+            img = img.reshape(28, 28)
 
         ax.imshow(img, cmap='gray')
 
@@ -96,8 +105,6 @@ def plot_training_results(loss_values, x_test, y_test, preds, save_path='results
     print(f"📊 Results plot saved in file '{save_path}'.")
     plt.savefig(save_path)
     plt.show()
-
-
 # --- Main Program Execution ---
 if __name__ == "__main__":
     # 1. Data Preparation
