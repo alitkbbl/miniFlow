@@ -22,7 +22,40 @@ Designed with an API inspired by Keras and TensorFlow, this project aims to demy
 
 ---
 
+## 🧠 Under the Hood: The Computational Graph
+
+Unlike simple script-based implementations, **miniFlow** treats neural networks as a **Dynamic Computational Graph**.
+
+Each operation (Input, Matrix Multiplication, Activation, Loss) is a **Node** in the graph. To execute the forward and backward passes correctly, the engine must determine the precise order of operations.
+
+### Topological Sort
+The heart of `miniFlow` is the implementation of **Topological Sort** (using Kahn's Algorithm / DFS). This algorithm:
+1.  Analyzes the dependency between nodes.
+2.  Flattens the graph into a linear sequence.
+3.  Ensures that a node's value is computed only **after** all its inputs are ready.
+
+This architecture allows for defining complex, non-linear network topologies dynamically, similar to how TensorFlow v1 operated.
+
+---
+
+## 📦 Installation
+
+Since **miniFlow** relies purely on NumPy, installation is lightweight.
+
+1. Clone the repository:
+```bash
+   git clone https://github.com/alitkbbl/miniFlow.git
+   cd miniFlow
+   ```
+2. Install dependencies:
+```bash
+   pip install numpy matplotlib
+   ```
+
+---
+
 ## 📂 Project Structure
+
 ```text
 miniflow/
 ├── activations/          # ReLU, LeakyReLU, Sigmoid, Tanh, Softmax
@@ -34,6 +67,7 @@ miniflow/
 ├── mnist.npz             # MNIST dataset (training/testing images and labels)
 └── main.py               # Example usage (MNIST Training)
 ```
+
 ---
 
 ## ⚡ Quick Start
@@ -111,8 +145,5 @@ The visualization below displays the training loss curve and sample predictions 
 
 ---
 
-## 📝 License
-
-This project is open-source and released under the **MIT License**.
-
-It is intended for educational purposes to demonstrate the internal mechanics of deep learning frameworks.
+### 📝 License
+This project is open-source and intended for educational purposes to demonstrate the internal mechanics of Deep Learning frameworks.
