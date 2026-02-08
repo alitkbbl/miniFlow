@@ -145,5 +145,18 @@ The visualization below displays the training loss curve and sample predictions 
 
 ---
 
+## 🔮 Roadmap: From MLP to Computer Vision
+
+While `miniFlow` currently masters Multi-Layer Perceptrons (MLPs), the next major milestone is to evolve it into a full-fledged **Computer Vision Framework**.
+
+The goal is to move beyond Flattening images and instead preserve spatial hierarchies, aiming for **>99% accuracy** on MNIST and supporting complex datasets like CIFAR-10.
+
+**Upcoming Features:**
+*   **Convolutional Layers (Conv2D):** Implementing forward and backward passes using **`im2col`** vectorization for efficient kernel operations purely in NumPy.
+*   **Pooling Layers:** Adding `MaxPooling2D` and `AveragePooling2D` for down-sampling.
+*   **Advanced Architectures:** Enabling construction of deep CNNs (like LeNet or miniature VGG styles) directly within `miniFlow`.
+
+---
+
 ### 📝 License
 This project is open-source and intended for educational purposes to demonstrate the internal mechanics of Deep Learning frameworks.
