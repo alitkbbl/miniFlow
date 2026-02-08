@@ -111,5 +111,8 @@ The visualization below displays the training loss curve and sample predictions 
 
 ---
 
-### 📝 License
-This project is open-source and intended for educational purposes to demonstrate the internal mechanics of Deep Learning frameworks.
+## 📝 License
+
+This project is open-source and released under the **MIT License**.
+
+It is intended for educational purposes to demonstrate the internal mechanics of deep learning frameworks.
