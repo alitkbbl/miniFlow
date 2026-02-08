@@ -1,5 +1,5 @@
 import numpy as np
-from callback import Callback
+from .callback import Callback
 
 class EarlyStopping(Callback):
     def __init__(self, monitor='val_loss', patience=5, min_delta=0.0):

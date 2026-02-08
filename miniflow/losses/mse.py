@@ -1,11 +1,10 @@
 import numpy as np
-from loss import Loss
+from .loss import Loss
+
 
 class MSE(Loss):
-    def calculate(self, output, y_true):
-        # Mean Squared Error
-        return np.mean(np.power(y_true - output, 2))
+    def forward(self, y_pred, y_true):
+        return np.mean(np.power(y_true - y_pred, 2))
 
-    def gradient(self, output, y_true):
-        # 2/N * (output - true)
-        return 2 * (output - y_true) / y_true.size
+    def backward(self, y_pred, y_true):
+        return 2 * (y_pred - y_true) / y_true.size
