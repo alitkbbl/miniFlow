@@ -3,17 +3,13 @@ import matplotlib.pyplot as plt
 import os
 
 # --- MiniFlow Framework Imports ---
-# Assuming the 'miniflow' package is located next to this file
-try:
-    from miniflow.model.model import Model
-    from miniflow.layers.dense import Dense
-    from miniflow.layers.flatten import Flatten
-    from miniflow.activations import ReLU
-    from miniflow.losses.softmax_ce import SoftmaxCrossEntropy
-    from miniflow.optimizers.adam import Adam
-except ImportError as e:
-    print("❌ Import Error: Please ensure the 'miniflow' folder is next to main.py.")
-    raise e
+from miniflow.model.model import Model
+from miniflow.layers.dense import Dense
+from miniflow.layers.flatten import Flatten
+from miniflow.activations import ReLU
+from miniflow.losses.softmax_ce import SoftmaxCrossEntropy
+from miniflow.optimizers.adam import Adam
+
 
 # Setting print options for numpy arrays
 np.set_printoptions(precision=4, suppress=True)
@@ -24,7 +20,7 @@ def load_mnist_data(path='mnist.npz'):
     Loads the MNIST dataset from a local file and normalizes the data.
     """
     if not os.path.exists(path):
-        raise FileNotFoundError(f"❌ File '{path}' not found. Please download the dataset file and place it next to the project.")
+        raise FileNotFoundError(f"❌ File '{path}' not found.")
 
     print(f"📂 Loading dataset from {path}...")
     with np.load(path, allow_pickle=True) as f:
